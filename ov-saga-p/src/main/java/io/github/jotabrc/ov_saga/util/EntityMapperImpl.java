@@ -4,9 +4,11 @@ import io.github.jotabrc.ov_saga.dto.ItemDto;
 import io.github.jotabrc.ov_saga.dto.ItemDtoInfo;
 import io.github.jotabrc.ov_saga.dto.ItemDtoUpdate;
 import io.github.jotabrc.ov_saga.model.Item;
+import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
+@Component
 public class EntityMapperImpl implements EntityMapper {
 
     @Override

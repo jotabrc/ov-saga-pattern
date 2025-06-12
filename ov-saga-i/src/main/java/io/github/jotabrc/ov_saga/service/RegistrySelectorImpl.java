@@ -20,7 +20,6 @@ public class RegistrySelectorImpl implements RegistrySelector {
     @Override
     public Optional<Item> select(final String key, final ProcessorType type) {
         return switch (type) {
-            case NAME -> itemRepository.findByName(key);
             case UUID -> itemRepository.findByUuid(key);
             case null, default -> throw new ProcessorTypeException("Unsupported processor type (%s)".formatted(type));
         };
@@ -29,7 +28,6 @@ public class RegistrySelectorImpl implements RegistrySelector {
     @Override
     public boolean selectByExistence(final String key, final ProcessorType type) {
         return switch (type) {
-            case NAME -> itemRepository.existsByName(key);
             case UUID -> itemRepository.existsByUuid(key);
             case null, default -> throw new ProcessorTypeException("Unsupported processor type (%s)".formatted(type));
         };
@@ -37,11 +35,11 @@ public class RegistrySelectorImpl implements RegistrySelector {
 
     @Override
     public Page<Item> select(PageFilter filter, Pageable pageable) {
-        if (filter.getMinQuantity() < filter.getMaxQuantity())
-            return itemRepository.findByQuantityBetween(filter.getMinQuantity(), filter.getMaxQuantity(), pageable);
-        else if (filter.getMaxQuantity() >= filter.getMinQuantity())
-            return itemRepository.findByQuantityLessThanEqual(filter.getMaxQuantity(), pageable);
+        if (filter.getMinValue() < filter.getMaxValue())
+            return itemRepository.findByQuantityBetween(filter.getMinValue(), filter.getMaxValue(), pageable);
+        else if (filter.getMaxValue() >= filter.getMinValue())
+            return itemRepository.findByQuantityLessThanEqual(filter.getMaxValue(), pageable);
         else
-            return itemRepository.findByQuantityMoreThanEqual(filter.getMinQuantity(), pageable);
+            return itemRepository.findByQuantityGreaterThanEqual(filter.getMinValue(), pageable);
     }
 }

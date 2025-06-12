@@ -10,10 +10,8 @@ import java.util.Optional;
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
     Optional<Item> findByUuid(String uuid);
-    Optional<Item> findByName(String name);
     Page<Item> findByQuantityBetween(int minValue, int maxValue, Pageable pageable);
     Page<Item> findByQuantityLessThanEqual(int maxValue, Pageable pageable);
-    Page<Item> findByQuantityMoreThanEqual(int minValue, Pageable pageable);
-    boolean existsByName(String name);
-    boolean existsByUuid(String name);
+    Page<Item> findByQuantityGreaterThanEqual(int minValue, Pageable pageable);
+    boolean existsByUuid(String uuid);
 }

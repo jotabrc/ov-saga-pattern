@@ -6,7 +6,9 @@ import io.github.jotabrc.ov_saga.dto.ItemDtoInfo;
 import io.github.jotabrc.ov_saga.dto.ItemDtoUpdate;
 import io.github.jotabrc.ov_saga.model.Item;
 import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Component;
 
+@Component
 public class EntityMapperImpl implements EntityMapper {
 
     @Override

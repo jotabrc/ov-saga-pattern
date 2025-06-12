@@ -1,14 +1,16 @@
 package io.github.jotabrc.ov_saga.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
-@Data @Builder @Accessors(chain = true)
+@Data @Builder @Accessors(chain = true) @NoArgsConstructor @AllArgsConstructor
 @Entity(name = "tb_item")
 public class Item {
 
