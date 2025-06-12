@@ -1,0 +1,40 @@
+package io.github.jotabrc.ov_saga.util;
+
+import io.github.jotabrc.ov_saga.dto.ItemDto;
+import io.github.jotabrc.ov_saga.dto.ItemDtoInfo;
+import io.github.jotabrc.ov_saga.dto.ItemDtoUpdate;
+import io.github.jotabrc.ov_saga.model.Item;
+
+import java.util.UUID;
+
+public class EntityMapperImpl implements EntityMapper {
+
+    @Override
+    public Item toEntity(String name) {
+        return Item
+                .builder()
+                .name(name)
+                .uuid(UUID.randomUUID().toString())
+                .build();
+    }
+
+    @Override
+    public Item toEntity(ItemDto dto) {
+        return toEntity(dto.getName());
+    }
+
+    @Override
+    public Item toEntity(ItemDtoUpdate dto) {
+        return toEntity(dto.getName());
+    }
+
+    @Override
+    public ItemDtoInfo toDto(Item item) {
+        return new ItemDtoInfo(
+                item.getUuid(),
+                item.getName(),
+                item.getCreatedAt(),
+                item.getUpdatedAt()
+        );
+    }
+}
