@@ -1,0 +1,45 @@
+services:
+  ov-saga-i:
+    image: openjdk:21
+    container_name: ov-saga-i
+    ports:
+      - "8082:8082"
+    volumes:
+      - ./ov-ims-inv/target/ov-saga-i-0.0.1-SNAPSHOT.jar:/app/app.jar
+    command: [ "java", "-jar", "/app/app.jar" ]
+    networks:
+      - app-network
+
+  ov-saga-p:
+    image: openjdk:21
+    container_name: ov-saga-p
+    ports:
+      - "8085:8085"
+    volumes:
+      - ./ov-ims-inv/target/ov-saga-p-0.0.1-SNAPSHOT.jar:/app/app.jar
+    command: [ "java", "-jar", "/app/app.jar" ]
+    networks:
+      - app-network
+
+  kafka-1:
+    image: apache/kafka:latest
+    container_name: kafka-1
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENERS: PLAINTEXT://kafka-1:9092,CONTROLLER://kafka-1:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-1:9092
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka-1:9093
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_NUM_PARTITIONS: 3
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

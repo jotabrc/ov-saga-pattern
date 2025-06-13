@@ -2,16 +2,16 @@ server:
   port: 8085
 
 spring:
-#  kafka:
-#    bootstrap-servers: kafka:9092
-#    consumer:
-#      group-id: io.github.jotabrc
-#      client-id: c1
-#      auto-offset-reset: lastest
-#      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-#      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-#    listener:
-#      missing-topics-fatal: false
+  kafka:
+    bootstrap-servers: kafka-1:9092
+    consumer:
+      group-id: io.github.jotabrc
+      client-id: c1
+      auto-offset-reset: lastest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    listener:
+      missing-topics-fatal: false
   application:
     name: ov-saga-p
   datasource:
