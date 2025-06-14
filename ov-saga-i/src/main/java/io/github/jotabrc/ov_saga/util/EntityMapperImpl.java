@@ -1,9 +1,6 @@
 package io.github.jotabrc.ov_saga.util;
 
-import io.github.jotabrc.ov_saga.dto.GetPage;
-import io.github.jotabrc.ov_saga.dto.ItemDto;
-import io.github.jotabrc.ov_saga.dto.ItemDtoInfo;
-import io.github.jotabrc.ov_saga.dto.ItemDtoUpdate;
+import io.github.jotabrc.ov_saga.dto.*;
 import io.github.jotabrc.ov_saga.model.Item;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
@@ -38,6 +35,21 @@ public class EntityMapperImpl implements EntityMapper {
                 item.getCreatedAt(),
                 item.getUpdatedAt()
         );
+    }
+
+    @Override
+    public ItemDto toDto(String uuid) {
+        return new ItemDto(uuid, 0);
+    }
+
+    @Override
+    public ItemDtoKafkaReply toDto(String message, boolean conflict) {
+        return new ItemDtoKafkaReply(message, conflict);
+    }
+
+    @Override
+    public <T> KafkaMessageCarrier<T> toDto(T dto, boolean requestReply, boolean senderOperationSuccess, String replyingTopic) {
+        return new KafkaMessageCarrier<T>(false, true, dto, replyingTopic);
     }
 
     @Override

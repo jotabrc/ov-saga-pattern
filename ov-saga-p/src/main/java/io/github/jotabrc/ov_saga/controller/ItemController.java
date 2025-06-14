@@ -1,5 +1,6 @@
 package io.github.jotabrc.ov_saga.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.github.jotabrc.ov_saga.dto.ItemDto;
 import io.github.jotabrc.ov_saga.dto.ItemDtoInfo;
 import io.github.jotabrc.ov_saga.dto.ItemDtoUpdate;
@@ -19,7 +20,7 @@ public class ItemController {
     private final ItemService itemService;
 
     @PostMapping
-    public ResponseEntity<String> save(ItemDto dto) {
+    public ResponseEntity<String> save(ItemDto dto) throws JsonProcessingException {
         String uuid = itemService.save(dto);
         URI location = ServletUriComponentsBuilder
                 .fromPath("/item/{uuid}")

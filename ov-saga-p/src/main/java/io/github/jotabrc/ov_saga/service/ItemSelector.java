@@ -4,8 +4,8 @@ import io.github.jotabrc.ov_saga.model.Item;
 
 import java.util.Optional;
 
-public interface RegistryProcessor {
+public interface ItemSelector {
 
-    boolean exists(String key, ProcessorType type);
     Optional<Item> find(String key, ProcessorType type);
+    boolean exists(String key, ProcessorType type);
 }

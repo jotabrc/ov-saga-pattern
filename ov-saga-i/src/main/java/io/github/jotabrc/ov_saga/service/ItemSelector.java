@@ -7,9 +7,9 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
 
-public interface RegistrySelector {
+public interface ItemSelector {
 
-    Optional<Item> select(String key, ProcessorType type);
-    boolean selectByExistence(String key, ProcessorType type);
-    Page<Item> select(PageFilter filter, Pageable pageable);
+    Optional<Item> find(String key, ProcessorType type);
+    Page<Item> find(PageFilter filter, Pageable pageable);
+    boolean exists(String key, ProcessorType type);
 }

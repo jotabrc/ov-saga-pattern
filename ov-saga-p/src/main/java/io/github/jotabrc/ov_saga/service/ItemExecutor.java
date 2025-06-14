@@ -5,5 +5,6 @@ import io.github.jotabrc.ov_saga.model.Item;
 
 public interface ItemExecutor {
 
-    Item update(Item item, ItemDtoUpdate newData);
+    Item save(Item item);
+    Item update(Item item, ItemDtoUpdate newItemData);
 }

@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class ItemServiceImpl implements ItemService {
 
-    private final RegistryProcessor registryProcessor;
+    private final ItemSelector itemSelector;
     private final ItemExecutor itemExecutor;
     private final EntityMapper mapper;
     private final ItemRepository repository;
@@ -26,7 +26,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     @Transactional
     public boolean save(ItemDto dto) {
-        boolean exists = registryProcessor.exists(dto.getUuid(), ProcessorType.UUID);
+        boolean exists = itemSelector.exists(dto.getUuid(), ProcessorType.UUID);
         if (exists) throw new ConflictException("Item with UUID (%s) already exists".formatted(dto.getUuid()));
         Item item = mapper.toEntity(dto);
         repository.save(item);
@@ -43,7 +43,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public GetPage<ItemDtoInfo> get(PageFilter filter, Pageable pageable) {
-        Page<Item> page = registryProcessor.find(filter, pageable);
+        Page<Item> page = itemSelector.find(filter, pageable);
         return mapper.toDto(page);
     }
 
@@ -54,7 +54,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     private Item getItemOrElseThrow(String uuid, ProcessorType processorType) {
-        return registryProcessor.find(uuid, processorType)
+        return itemSelector.find(uuid, processorType)
                 .orElseThrow(() -> new NotFoundException("Item with UUID (%s) not found"
                         .formatted(uuid)));
     }
